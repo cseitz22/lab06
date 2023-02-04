@@ -11,6 +11,8 @@ output: github_document
 library(tidyverse) 
 library(dsbox)
 library(mosaicData) 
+library(ggbreak) 
+library(patchwork)
 ```
 
 ### Exercise 1
@@ -89,5 +91,61 @@ geom_line(data=staff_df,aes(x = year,
 
 
 ### Exercise 3
+
+The goal to improve the fisheries graph is to plot the data with a scale break since it seems like there are only a few countries that capture/farm way more fish than the rest. First, I'm going to filter the data for countries that have a total harvest of over 100,000 tons. After the filter, we now have 82 countries. 
+
+```{r import_fish_data}
+
+fisheries <- read_csv("data/fisheries.csv", show_col_types = FALSE)
+
+```
+
+```{r filter_data}
+
+fisheries <- fisheries%>%
+  filter(total>100000)
+
+```
+
+```{r plot}
+
+g <- ggplot(data=fisheries, 
+            aes(x=country, y=total))+ #, group=country, color=country
+  geom_point()
+g2<- g+ scale_y_break(c(2350000,81400000))
+g2
+```
+
+
+### Exercise 4
+
+
+
+
+
+### Exercise 5
+
+
+
+
+### Exercise 6
+
+
+
+
+
+
+### Exercise 7
+
+
+
+
+
+
+
+
+
+
+
 
 
