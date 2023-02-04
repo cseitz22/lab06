@@ -52,6 +52,40 @@ staff_long %>%
 
 ### Exercise 2
 
+In order to show that the proportion of part-time faculty hiring has increased compared to other instructional staff types, I would make a new data frame with the average of the four other staff types and then create the same graph. 
+
+```{r create-new-df}
+
+staff_df <- staff_long %>%
+  subset(faculty_type!="Part-Time Faculty")
+
+staff_df<- staff_df %>%
+  group_by(year)%>%
+  summarise(mean_pct=mean(value),
+            faculty_type="other_types")
+
+pt_faculty <- staff_long %>%
+  subset(faculty_type=="Part-Time Faculty")
+
+```
+
+```{r new_plot}
+
+ggplot() +
+geom_line(data=pt_faculty,aes(x = year,
+           y = value,
+           group = faculty_type,
+           color = faculty_type))+
+geom_line(data=staff_df,aes(x = year,
+           y = mean_pct,
+           group = faculty_type,
+           color = faculty_type))+
+  labs(title="Percentage of staff hires by year",
+       x="Year",
+       y="Percentage of hires (%)")+
+  guides(color = guide_legend(title="Faculty Type"))
+
+```
 
 
 ### Exercise 3
