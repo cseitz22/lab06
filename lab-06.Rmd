@@ -117,15 +117,23 @@ g2
 ```
 Since there are still 82 countries that capture/farm over 100,000 fish, our x-axis will always be super jumbled if we keep all 82 countries in one graph. We could (1) raise the bar of how many fish a country needs to capture/farm to get on the graph or (2) break down the graph into a several graphs based on continent. Possibly, putting country on the y-axis would give use more room to see the country. I could also try plotting captured and farmed fish separately. 
 
-### Exercise 4
 
 
+### Smokers in Whickham
+### Exercise 1
+
+```{r whickham}
+
+data(Whickham)
+
+```
+
+These data come from an observational study because there was no manipulation introduced. The researchers observed individuals age and smoking habits and then observed if they were alive 20 years later. 
 
 
+### Exercise 2
 
-### Exercise 5
-
-
+There are 1314 observations in this dataset with each observation representing a single subject. 
 
 
 ### Exercise 6
