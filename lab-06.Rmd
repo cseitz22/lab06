@@ -194,11 +194,36 @@ The data indicate that more of the dead individuals were not smokers. 31.4% of n
 
 ### Exercise 6
 
+```{r create-age-variable}
+
+Whickham <- Whickham %>%
+  mutate(age_cat = case_when(age <= 44 ~ "18-44",
+                             age > 44 & age <= 64 ~ "45-64",
+                             age > 64 ~ "65+"))
+
+```
 
 
+### Exercise 7
 
+```{r count-table}
 
+Whickham %>%
+  count(smoker, age_cat, outcome)
 
+```
+
+```{r new-visualization}
+
+Whickham %>%
+  ggplot(aes(x=smoker, fill=outcome))+
+    geom_bar(position="dodge")+
+    facet_wrap(~age_cat)+
+  labs(title = "Health Outcomes of Smokers vs. Non-smokers by Age Group",
+       x="Smoking Status",
+       y="Number of individuals")
+
+```
 
 
 
