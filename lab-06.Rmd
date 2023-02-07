@@ -136,17 +136,63 @@ These data come from an observational study because there was no manipulation in
 There are 1314 observations in this dataset with each observation representing a single subject. 
 
 
+### Exercise 3
+
+There are 3 variables in this dataset: Outcome, Smoker?, and Age at initial observation. All variables are integers.
+
+
+```{r variable_type}
+
+typeof(Whickham$outcome)
+typeof(Whickham$smoker)
+typeof(Whickham$age)
+
+```
+
+```{r variable_graph}
+
+Whickham %>%
+ggplot(aes(x = outcome)) +
+  geom_bar()
+Whickham %>%
+ggplot(aes(x = smoker)) +
+  geom_bar()
+Whickham %>%
+ggplot(aes(x = age)) +
+  geom_bar()
+
+```
+
+### Exercise 4
+
+I would expect smokers would be more likely than non-smokers to be dead. We will have to do something about age when examining the relationship between smoking and health outcome. 
+
+
+### Exercise 5
+
+```{r smoker_outcome_graph}
+
+whick <- Whickham %>%
+  count(smoker, outcome)
+  
+ggplot(Whickham, aes(x=outcome, fill=smoker))+
+  geom_bar(position="dodge")+
+  labs(title = "Health Outcomes of Smokers vs. Non-smokers",
+       x="Health Outcome",
+       y="Number of individuals")
+    
+ggplot(Whickham, aes(x=smoker, fill=outcome))+
+  geom_bar(position="dodge")+
+  labs(title = "Health Outcomes of Smokers vs. Non-smokers",
+       x="Smoking Status",
+       y="Number of individuals")
+
+```
+
+The data indicate that more of the dead individuals were not smokers. 31.4% of non-smokers are now dead and 23.9% of smokers are now dead. This statistic makes it seem like individuals are more likely to die if they are non-smokers. Again, this statistic may look different when we account for age at the initial observation. 
+
+
 ### Exercise 6
-
-
-
-
-
-
-### Exercise 7
-
-
-
 
 
 
