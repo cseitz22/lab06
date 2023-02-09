@@ -113,9 +113,44 @@ g <- ggplot(data=fisheries,
             aes(x=country, y=total))+ #, group=country, color=country
   geom_point()
 g2<- g+ scale_y_break(c(2350000,81400000))
-g2
+g2+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  labs(title = "Total number of fish harvested per country")
 ```
-Since there are still 82 countries that capture/farm over 100,000 fish, our x-axis will always be super jumbled if we keep all 82 countries in one graph. We could (1) raise the bar of how many fish a country needs to capture/farm to get on the graph or (2) break down the graph into a several graphs based on continent. Possibly, putting country on the y-axis would give use more room to see the country. I could also try plotting captured and farmed fish separately. 
+
+Since there are still 82 countries that capture/farm over 100,000 fish, our x-axis will always be super jumbled if we keep all 82 countries in one graph. We could (1) raise the bar of how many fish a country needs to capture/farm to get on the graph or (2) break down the graph into a several graphs based on continent. Possibly, putting country on the y-axis would give us more room to see the country. I could also try plotting captured and farmed fish separately, but this wouldn't fix our x-axis problem. 
+
+I'm going to filter again for at least 50,000 fish in each capture and farm categories to decrease the number of countries that qualify for the graph and see if it's low enough to make a better graph. After doing this, the number of farmed fishery locations decreased to 40 and the number of captured fishery location stayed at 82. Then, I increased the number of capture fish to 100,000. Now, I will create two separate graphs for captured and farmed fish. I also rotated the x-axis labels to make them readable. 
+
+```{r filter_data_capture}
+
+fish_capture <- fisheries%>%
+  filter(capture>100000)
+
+fish_farm <- fisheries%>%
+  filter(aquaculture>50000)
+
+```
+
+```{r plot_farmed}
+
+g <- ggplot(data=fish_farm, 
+            aes(x=country, y=aquaculture))+ #, group=country, color=country
+  geom_point()
+g2<- g+ scale_y_break(c(17000000,67000000))
+g2 +theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  labs(title = "Number of fish farmed per country")
+```
+
+```{r plot_captured}
+
+g <- ggplot(data=fish_capture, 
+            aes(x=country, y=capture))+ #, group=country, color=country
+  geom_point()
+g2<- g+ scale_y_break(c(7000000,18500000))
+g2 +theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  labs(title = "Number of fish captured per country")
+```
+
 
 
 
@@ -170,11 +205,15 @@ I would expect smokers would be more likely than non-smokers to be dead. We will
 
 ### Exercise 5
 
-```{r smoker_outcome_graph}
+```{r smoker_outcomes}
 
 whick <- Whickham %>%
   count(smoker, outcome)
-  
+
+```
+
+```{r smoker_outcome_graph}
+
 ggplot(Whickham, aes(x=outcome, fill=smoker))+
   geom_bar(position="dodge")+
   labs(title = "Health Outcomes of Smokers vs. Non-smokers",
@@ -213,6 +252,10 @@ Whickham %>%
 
 ```
 
+
+3.5% of 18-44 year old non-smokers died, while 5.26% of 18-44 year old smokers died. 26.5% of 45-64 year old non-smokers died, while 32.4% of 45-64 year old smokers died. 85.5% of 65+ year old non-smokers died, while 88% of 65+ smokers died. These results clearly display that individuals are more likely to die if they smoke than if they don't smoke. Without taking into account the age of each individual, the number of dead individuals from the 65+ non-smoker group highly swing the percentage of dead non-smokers, but these individuals very likely died from other factors (potentially old age) because the outcome was collected when these individuals were at least 85 years old.
+
+
 ```{r new-visualization}
 
 Whickham %>%
@@ -224,7 +267,6 @@ Whickham %>%
        y="Number of individuals")
 
 ```
-
 
 
 
